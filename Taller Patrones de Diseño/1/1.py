@@ -8,7 +8,7 @@ class EstrategiaOrdenacion(ABC):
 
 # Clase Burbuja que extiende EstrategiaOrdenacion
 class Burbuja(EstrategiaOrdenacion):
-    def ordenar(self, lista, ascendente: bool):
+    def ordenar(self, lista: list, ascendente: bool):
         n = len(lista)
         for i in range(n):
             for j in range(0, n-i-1):
