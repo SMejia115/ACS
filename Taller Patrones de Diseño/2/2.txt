@@ -1,0 +1,41 @@
+Clase Producto:
+    Atributos:
+        - nombre
+        - precio_contado
+
+Clase TarjetaCredito (Interfaz/Clase Abstracta):
+    Método abstracto calcular_intereses(precio, cuotas, banco)
+
+Clase TarjetaVisa hereda de TarjetaCredito:
+    Método calcular_intereses(precio, cuotas, banco):
+        Si día de la semana es "Lunes":
+            interes = precio * 0.05
+        Sino:
+            interes = precio * 0.07
+        Retornar interes
+
+Clase TarjetaMastercard hereda de TarjetaCredito:
+    Método calcular_intereses(precio, cuotas, banco):
+        Si banco == "BancoX":
+            interes = precio * 0.06
+        Sino:
+            interes = precio * 0.08
+        Retornar interes
+
+Clase TarjetaAmericanExpress hereda de TarjetaCredito:
+    Método calcular_intereses(precio, cuotas, banco):
+        interes_base = precio * 0.09
+        Si cuotas > 6:
+            interes = interes_base + (precio * 0.02)
+        Retornar interes
+
+Clase ProcesadorPago:
+    Atributos:
+        - tarjeta (tipo TarjetaCredito)
+    Métodos:
+        - establecer_tarjeta(nueva_tarjeta)
+        - calcular_precio_final(producto, cuotas, banco):
+            interes = tarjeta.calcular_intereses(producto.precio_contado, cuotas, banco)
+            precio_total = producto.precio_contado + interes
+            monto_cuota = precio_total / cuotas
+            Retornar (precio_total, monto_cuota)
