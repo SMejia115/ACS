@@ -1,0 +1,64 @@
+Clase CajaAhorros:
+    Atributos:
+        - saldo (dinero)
+    Métodos:
+        - depositar(dinero):
+            saldo ← saldo + dinero
+            Retornar "Depósito exitoso. Saldo actual: " + saldo
+
+        - retirar(dinero):
+            Si dinero > saldo:
+                Retornar "Fondos insuficientes"
+            saldo ← saldo - dinero
+            Retornar "Retiro exitoso. Saldo actual: " + saldo
+
+        - saldo():
+            Retornar saldo
+
+# ------------------------------
+# Clase Decoradora Base
+# ------------------------------
+Clase DecoradorCajaAhorros:
+    Atributos:
+        - caja (tipo CajaAhorros)
+    Métodos:
+        - depositar(dinero):
+            Retornar caja.depositar(dinero)
+        - retirar(dinero):
+            Retornar caja.retirar(dinero)
+        - saldo():
+            Retornar caja.saldo()
+
+# ------------------------------
+# Decorador: Limita a dos retiros por semana
+# ------------------------------
+Clase LimiteRetirosDecorator hereda de DecoradorCajaAhorros:
+    Atributos:
+        - retiros_semana (contador)
+    Método retirar(dinero):
+        Si retiros_semana ≥ 2:
+            Retornar "Error: No puede hacer más de dos retiros por semana"
+        resultado ← caja.retirar(dinero)
+        Si resultado == "Retiro exitoso":
+            retiros_semana ← retiros_semana + 1
+        Retornar resultado
+
+# ------------------------------
+# Decorador: Requiere autorización si el retiro es mayor a $10X
+# ------------------------------
+Clase AutorizacionRetirosDecorator hereda de DecoradorCajaAhorros:
+    Método retirar(dinero):
+        Si dinero > 10X:
+            Mostrar "Se requiere autorización para este retiro. ¿Autorizar? (Sí/No)"
+            Leer respuesta
+            Si respuesta != "Sí":
+                Retornar "Retiro cancelado por falta de autorización"
+        Retornar caja.retirar(dinero)
+
+# ------------------------------
+# Decorador: Notifica depósitos sospechosos a control de lavado de dinero
+# ------------------------------
+Clase ControlLavadoDecorator hereda de DecoradorCajaAhorros:
+    Método depositar(dinero):
+        Si dinero > 5X:
+            Mostrar "Alerta: Depósito reportado a control de lavado de dinero"

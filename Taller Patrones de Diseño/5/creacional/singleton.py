@@ -1,0 +1,23 @@
+class Conexion:
+    _instancia = None  # Variable de clase para almacenar la única instancia
+
+    def __new__(cls):
+        if cls._instancia is None:
+            cls._instancia = super(Conexion, cls).__new__(cls)
+        return cls._instancia
+
+    def conectar(self):
+        print("Me conecté a la BD")
+
+    def desconectar(self):
+        print("Me desconecté de la BD")
+
+
+# Uso del Singleton
+if __name__ == "__main__":
+    c = Conexion()
+    c.conectar()
+    c.desconectar()
+
+    # Verificar si sigue siendo la misma instancia
+    print(isinstance(c, Conexion)) 
