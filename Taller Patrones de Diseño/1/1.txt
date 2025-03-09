@@ -1,0 +1,28 @@
+Clase abstracta EstrategiaOrdenacion:
+    Método abstracto ordenar(lista, orden)
+
+Clase Burbuja extiende EstrategiaOrdenacion:
+    Método ordenar(lista, orden):
+        Si orden es ascendente:
+            Implementar burbuja ascendente
+        Si no:
+            Implementar burbuja descendente
+
+Clase QuickSort extiende EstrategiaOrdenacion:
+    Método ordenar(lista, orden):
+        Si orden es ascendente:
+            Implementar quicksort ascendente
+        Si no:
+            Implementar quicksort descendente
+
+Clase InsertSort extiende EstrategiaOrdenacion:
+    Método ordenar(lista, orden):
+        Si orden es ascendente:
+            Implementar inserción ascendente
+        Si no:
+            Implementar inserción descendente
+
+Clase ContextoOrdenacion:
+    Atributo estrategia: EstrategiaOrdenacion
+    Método setEstrategia(estrategia)
+    Método ejecutarOrdenacion(lista, orden)
