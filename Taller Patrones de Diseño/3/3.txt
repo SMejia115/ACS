@@ -1,0 +1,34 @@
+Clase abstracta AlgoritmoInventario:
+    Método abstracto optimizar_inventario(datos)
+
+Clase FIFO extiende AlgoritmoInventario:
+    Método optimizar_inventario(datos):
+        Implementación de optimización con FIFO
+
+Clase LIFO extiende AlgoritmoInventario:
+    Método optimizar_inventario(datos):
+        Implementación de optimización con LIFO
+
+Clase JIT extiende AlgoritmoInventario:
+    Método optimizar_inventario(datos):
+        Implementación de Just In Time (JIT)
+
+Clase FabricaAlgoritmos:
+    Método estático obtener_algoritmo(tipo):
+        Si tipo == "FIFO":
+            Retornar instancia de FIFO
+        Si tipo == "LIFO":
+            Retornar instancia de LIFO
+        Si tipo == "JIT":
+            Retornar instancia de JIT
+        Si no:
+            Lanzar error "Algoritmo no soportado"
+
+Clase GestorInventario:
+    Atributo algoritmo: AlgoritmoInventario
+
+    Método set_algoritmo(nuevo_algoritmo):
+        Asignar nuevo_algoritmo a atributo algoritmo
+
+    Método ejecutar_optimizacion(datos):
+        Retornar algoritmo.optimizar_inventario(datos)
