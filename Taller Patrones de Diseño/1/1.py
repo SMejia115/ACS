@@ -12,7 +12,7 @@ class Burbuja(EstrategiaOrdenacion):
         n = len(lista)
         for i in range(n):
             for j in range(0, n-i-1):
-                if (lista[j] > lista[j+1]) != ascendente:
+                if (lista[j] > lista[j+1]) == ascendente:
                     lista[j], lista[j+1] = lista[j+1], lista[j]
         return lista
 
@@ -21,11 +21,16 @@ class QuickSort(EstrategiaOrdenacion):
     def ordenar(self, lista, ascendente: bool):
         if len(lista) <= 1:
             return lista
+        
         pivot = lista[len(lista) // 2]
-        izquierda = [x for x in lista if (x < pivot) != ascendente]
-        medio = [x for x in lista if x == pivot]
-        derecha = [x for x in lista if (x > pivot) != ascendente]
-        return self.ordenar(izquierda, ascendente) + medio + self.ordenar(derecha, ascendente)
+        left = [x for x in lista if x < pivot]
+        middle = [x for x in lista if x == pivot]
+        right = [x for x in lista if x > pivot]
+        
+        if ascendente:
+            return self.ordenar(left, ascendente) + middle + self.ordenar(right, ascendente)
+        else:
+            return self.ordenar(right, ascendente) + middle + self.ordenar(left, ascendente)
 
 # Clase InsertSort que extiende EstrategiaOrdenacion
 class InsertSort(EstrategiaOrdenacion):
@@ -33,7 +38,7 @@ class InsertSort(EstrategiaOrdenacion):
         for i in range(1, len(lista)):
             clave = lista[i]
             j = i - 1
-            while j >= 0 and (lista[j] > clave) != ascendente:
+            while j >= 0 and (lista[j] > clave) == ascendente:
                 lista[j + 1] = lista[j]
                 j -= 1
             lista[j + 1] = clave

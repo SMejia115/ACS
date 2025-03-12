@@ -17,7 +17,7 @@ class TarjetaCredito(ABC):
 class TarjetaVisa(TarjetaCredito):
     def calcular_intereses(self, precio: float, cuotas: int, banco: str) -> float:
         dia_semana = datetime.today().strftime("%A")  # Obtener el día de la semana
-        if dia_semana == "Monday":  # Lunes
+        if dia_semana == "Lunes":  # Lunes
             interes = precio * 0.05
         else:
             interes = precio * 0.07

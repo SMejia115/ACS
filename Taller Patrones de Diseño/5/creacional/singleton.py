@@ -19,5 +19,10 @@ if __name__ == "__main__":
     c.conectar()
     c.desconectar()
 
+    c1 = Conexion()
+    
+    c2 = Conexion()
+    print(c1 is c2)
+
     # Verificar si sigue siendo la misma instancia
     print(isinstance(c, Conexion)) 

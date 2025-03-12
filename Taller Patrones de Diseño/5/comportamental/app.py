@@ -38,7 +38,7 @@ if __name__ == "__main__":
     caretaker.add_memento(originator.guardar())  # ESTADO POSICIÓN 2
 
     originator.set_estado(juego)
-    originator.restaurar(caretaker.get_memento(1))
+    originator.restaurar(caretaker.get_memento(2))
 
     juego = originator.get_estado()
     print(juego)
