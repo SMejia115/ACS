@@ -44,3 +44,4 @@ hilo_reemplazo.join()
 hilo_monitor.join()
 
 print("Proceso finalizado. Suma de la lista excedió 20000.")
+
