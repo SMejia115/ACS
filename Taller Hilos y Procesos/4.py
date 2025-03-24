@@ -1,16 +1,17 @@
-import threading
+from datetime import datetime
 import time
-import logging
+import uuid
 import random
+import threading
+import logging
 import queue
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='(%(threadName)-9s) %(message)s',)
+logging.basicConfig(level=logging.DEBUG, format='(%(threadName)-9s) %(message)s')
 
 BUF_SIZE = 10
 q = queue.Queue(BUF_SIZE)
 
-lock = threading.Lock()  # Lock para protección adicional
+condition = threading.Condition()
 
 class HiloProductor(threading.Thread):
     def __init__(self, name=None):
@@ -20,8 +21,13 @@ class HiloProductor(threading.Thread):
     def run(self):
         while True:
             item = random.randint(1, 10)
-            q.put(item)  # Operación bloqueante, no requiere verificar si está llena
-            logging.debug(f'Insertando "{item}" : {q.qsize()} elementos en la cola')
+            with condition:  # Protección de la región crítica
+                while q.full():  
+                    condition.wait()  # Esperar si la cola está llena
+                q.put(item)
+                logging.debug(f'Insertando "{item}" : {q.qsize()} elementos en la cola')
+                condition.notify()  # Despertar consumidores
+            
             time.sleep(random.random())
 
 class HiloConsumidor(threading.Thread):
@@ -31,10 +37,16 @@ class HiloConsumidor(threading.Thread):
 
     def run(self):
         while True:
-            item = q.get()  # Operación bloqueante, no requiere verificar si está vacía
-            logging.debug(f'Sacando "{item}" : {q.qsize()} elementos en la cola')
+            with condition:  # Protección de la región crítica
+                while q.empty():  
+                    condition.wait()  # Esperar si la cola está vacía
+                item = q.get()
+                logging.debug(f'Sacando "{item}" : {q.qsize()} elementos en la cola')
+                condition.notify()  # Despertar productores
+            
             time.sleep(random.random())
 
+# Creación y ejecución de hilos
 p = HiloProductor(name='productor')
 p2 = HiloProductor(name='productor2')
 c = HiloConsumidor(name='consumidor')
